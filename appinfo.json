@@ -1,0 +1,11 @@
+{
+    "id": "com.palm.app.jonandnic.urlassist",
+    "version": "1.0.0",
+    "vendor": "Jon Wise",
+    "type": "web",
+    "main": "index.html",
+    "title": "URL Assist",
+    "uiRevision": "2",
+    "icon": "icon.png",
+    "splashicon": "icon-256x256.png"
+}
