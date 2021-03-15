@@ -25,6 +25,16 @@ MainAssistant.prototype.setup = function() {
             disabled: false
         }
     );
+    this.controller.setupWidget("toggleYouTubeMobile",
+        this.attributes = {
+            trueValue: true,
+            falseValue: false
+        },
+        this.model = {
+            value: false,
+            disabled: false
+        }
+    );
     this.controller.setupWidget("toggleYouTubeShort",
         this.attributes = {
             trueValue: true,
@@ -149,6 +159,7 @@ MainAssistant.prototype.setup = function() {
     this.appMenuAttributes = { omitDefaultItems: true };
     this.appMenuModel = {
         items: [
+            Mojo.Menu.editItem,
             { label: "About", command: 'do-myAbout' }
         ]
     };
@@ -156,6 +167,8 @@ MainAssistant.prototype.setup = function() {
     /* add event handlers to listen to events from widgets */
     Mojo.Event.listen(this.controller.get("titleYouTubeLong"), Mojo.Event.tap, this.handleTitleTap.bind(this));
     Mojo.Event.listen(this.controller.get("toggleYouTubeLong"), Mojo.Event.propertyChange, this.handleValueChange.bind(this));
+    Mojo.Event.listen(this.controller.get("titleYouTubeMobile"), Mojo.Event.tap, this.handleTitleTap.bind(this));
+    Mojo.Event.listen(this.controller.get("toggleYouTubeMobile"), Mojo.Event.propertyChange, this.handleValueChange.bind(this));
     Mojo.Event.listen(this.controller.get("titleYouTubeShort"), Mojo.Event.tap, this.handleTitleTap.bind(this));
     Mojo.Event.listen(this.controller.get("toggleYouTubeShort"), Mojo.Event.propertyChange, this.handleValueChange.bind(this));
     Mojo.Event.listen(this.controller.get("titleRedditShort"), Mojo.Event.tap, this.handleTitleTap.bind(this));
@@ -195,9 +208,12 @@ MainAssistant.prototype.loadToggleStates = function() {
             this.setToggleFromHandlersList("https://www.youtube.com/watch?v=VYVz2qa30G0", "com.jonandnic.metube", "toggleYouTubeLong", this.loadToggleStates);
             break;
         case 1:
-            this.setToggleFromHandlersList("https://youtu.be/VYVz2qa30G0", "com.jonandnic.metube", "toggleYouTubeShort", this.loadToggleStates);
+            this.setToggleFromHandlersList("http://m.youtube.com/watch?v=VYVz2qa30G0", "com.jonandnic.metube", "toggleYouTubeMobile", this.loadToggleStates);
             break;
         case 2:
+            this.setToggleFromHandlersList("https://youtu.be/VYVz2qa30G0", "com.jonandnic.metube", "toggleYouTubeShort", this.loadToggleStates);
+            break;
+        case 3:
             this.setToggleFromHandlersList("https://v.redd.it", "com.jonandnic.metube", "toggleRedditShort", this.loadToggleStates);
             break;
     }
@@ -265,11 +281,14 @@ MainAssistant.prototype.handleCommand = function(event) {
 };
 
 MainAssistant.prototype.handleTitleTap = function(event) {
-    Mojo.Log.info("Title tap on: " + event.srcElement.id);
+    //Mojo.Log.info("Title tap on: " + event.srcElement.id);
     var testURL = "https://www.youtube.com/watch?v=VYVz2qa30G0";
     switch (event.srcElement.id) {
+        case "titleYouTubeMobile":
+            testURL = "http://m.youtube.com/watch?v=tU6V1AL5WgA";
+            break;
         case "titleYouTubeShort":
-            testURL = "https://youtu.be/VYVz2qa30G0";
+            testURL = "https://youtu.be/X3Of-DItNfw";
             break;
         case "titleRedditShort":
             testURL = "https://v.redd.it/0b6pmbs3s1k61";
@@ -286,12 +305,15 @@ MainAssistant.prototype.handleValueChange = function(event) {
         this.removeUrlHandler("com.jonandnic.metube");
         //This is an all or nothing operation, so set all toggles to false
         this.setToggleValue("toggleYouTubeLong", false);
+        this.setToggleValue("toggleYouTubeMobile", false);
         this.setToggleValue("toggleYouTubeShort", false);
         this.setToggleValue("toggleRedditShort", false);
     } else {
         switch (event.srcElement.id) {
             case "toggleYouTubeLong":
                 this.addUrlHandler("com.jonandnic.metube", "^[^:]+://www.youtube.com/watch");
+                break;
+            case "toggleYouTubeMobile":
                 this.addUrlHandler("com.jonandnic.metube", "^[^:]+://m.youtube.com/watch");
                 break;
             case "toggleYouTubeShort":
