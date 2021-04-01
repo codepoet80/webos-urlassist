@@ -224,7 +224,7 @@ MainAssistant.prototype.setToggleFromHandlersList = function(url, appId, toggleB
     this.appId = appId;
     this.toggleButtonId = toggleButtonId;
     this.handlerLoadedCallback = callback;
-    this.launchRequest = new Mojo.Service.Request("palm://com.palm.applicationManager", {
+    this.serviceRequest = new Mojo.Service.Request("palm://com.palm.applicationManager", {
         method: "listAllHandlersForUrl",
         parameters: {
             "url": url
@@ -397,7 +397,7 @@ MainAssistant.prototype.addUrlHandler = function(appId, urlPattern, schemeForm) 
     Mojo.Log.info("Installing handler for: " + urlPattern);
     if (!schemeForm)
         schemeForm = false;
-    this.launchRequest = new Mojo.Service.Request("palm://com.palm.applicationManager", {
+    this.serviceRequest = new Mojo.Service.Request("palm://com.palm.applicationManager", {
         method: "addRedirectHandler",
         parameters: {
             "appId": appId,
@@ -417,7 +417,7 @@ MainAssistant.prototype.addUrlHandler = function(appId, urlPattern, schemeForm) 
 
 MainAssistant.prototype.removeUrlHandler = function(appId) {
     Mojo.Log.info("Remove hanlder button pressed!");
-    this.launchRequest = new Mojo.Service.Request("palm://com.palm.applicationManager", {
+    this.serviceRequest = new Mojo.Service.Request("palm://com.palm.applicationManager", {
         method: "removeHandlersForAppId",
         parameters: {
             "appId": appId
