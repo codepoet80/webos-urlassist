@@ -402,7 +402,7 @@ MainAssistant.prototype.addUrlHandler = function(appId, urlPattern, schemeForm) 
         parameters: {
             "appId": appId,
             "urlPattern": urlPattern,
-            "schemeForm": false,
+            "schemeForm": schemeForm,
         },
         onSuccess: function(response) {
             Mojo.Log.info("Handler registration success: " + JSON.stringify(response));
