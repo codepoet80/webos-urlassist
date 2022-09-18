@@ -274,7 +274,7 @@ MainAssistant.prototype.handleCommand = function(event) {
     if (event.type == Mojo.Event.command) {
         switch (event.command) {
             case 'do-myAbout':
-                this.ShowDialogBox("URL Assist", "Use this app to configure URL Redirect handlers that can launch apps, instead of the webOS Browser.<br>Copyright 2021, Jonathan Wise. Available under an MIT License. Source code available at: https://github.com/codepoet80/webos-urlassist");
+                this.ShowDialogBox("URL Assist", "Use this app to configure URL Redirect handlers that can launch apps, instead of the webOS Browser.<br>Copyright 2022, Jon W. Available under an MIT License. Source code available at: https://github.com/codepoet80/webos-urlassist");
                 break;
         }
     }
